@@ -1,5 +1,6 @@
 package com.escodro.category.presentation.list
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.escodro.category.R
 import com.escodro.category.model.Category
 import com.escodro.core.extension.dialog
@@ -31,6 +33,8 @@ internal class CategoryListFragment : Fragment() {
 
     private var navigator: NavController? = null
 
+    private var isLandscape: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,21 +49,33 @@ internal class CategoryListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("onViewCreated()")
 
-        bindComponents()
+        isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        updateRecyclerView()
         viewModel.loadCategories(onListLoaded = ::updateList)
         navigator = NavHostFragment.findNavController(this)
-    }
 
-    private fun bindComponents() {
-        Timber.d("bindComponents()")
-
-        recyclerview_categorylist_list?.adapter = adapter
-        recyclerview_categorylist_list?.layoutManager = getLayoutManager()
         button_categorylist_add?.setOnClickListener { addCategory() }
     }
 
-    private fun getLayoutManager() =
-        GridLayoutManager(context, NUMBER_OF_COLUMNS)
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Timber.d("onConfigurationChanged()")
+
+        isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        updateRecyclerView()
+    }
+
+    private fun updateRecyclerView() {
+        Timber.d("updateRecyclerView()")
+
+        recyclerview_categorylist_list?.adapter = adapter
+        recyclerview_categorylist_list?.layoutManager = getLayoutManager()
+    }
+
+    private fun getLayoutManager(): RecyclerView.LayoutManager {
+        val layoutSpan = if (isLandscape) LAYOUT_SPAN_LANDSCAPE else LAYOUT_SPAN_PORTRAIT
+        return GridLayoutManager(context, layoutSpan)
+    }
 
     private fun updateList(list: List<Category>) {
         Timber.d("updateList() - Size = ${list.size}")
@@ -120,6 +136,8 @@ internal class CategoryListFragment : Fragment() {
 
     companion object {
 
-        private const val NUMBER_OF_COLUMNS = 2
+        private const val LAYOUT_SPAN_PORTRAIT = 2
+
+        private const val LAYOUT_SPAN_LANDSCAPE = 3
     }
 }
