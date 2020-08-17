@@ -19,7 +19,14 @@ class ToolbarViewModel : ViewModel() {
      *
      * @param title the title to be updated
      */
-    fun updateTitle(title: String?) {
+    fun updateTitle(title: String) {
         actionBarTitle.value = title
+    }
+
+    /**
+     * Clears the action bar title.
+     */
+    fun clearTitle() {
+        actionBarTitle.value = ""
     }
 }

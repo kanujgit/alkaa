@@ -7,6 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.PreferenceFragmentCompat
 import com.escodro.core.extension.getVersionName
+import com.escodro.core.viewmodel.ToolbarViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 /**
@@ -16,11 +18,12 @@ internal class PreferenceFragment : PreferenceFragmentCompat() {
 
     private var navigator: NavController? = null
 
+    private val sharedViewModel: ToolbarViewModel by sharedViewModel()
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         Timber.d("onCreatePreferences()")
 
         setPreferencesFromResource(R.xml.preferences, rootKey)
-
         initPreferences()
     }
 
@@ -38,6 +41,7 @@ internal class PreferenceFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel.updateTitle(getString(R.string.preference_title))
         navigator = NavHostFragment.findNavController(this)
     }
 

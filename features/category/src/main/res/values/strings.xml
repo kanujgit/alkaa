@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="category_list_title">Categories</string>
+
     <!-- Category detail screen -->
     <string name="category_list_menu_remove">Remove</string>
     <string name="category_list_menu_edit">Edit</string>

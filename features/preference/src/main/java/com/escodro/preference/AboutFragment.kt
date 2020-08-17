@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.escodro.core.extension.openUrl
+import com.escodro.core.viewmodel.ToolbarViewModel
 import kotlinx.android.synthetic.main.fragment_about.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 /**
  * [Fragment] responsible to show information about the application.
  */
 internal class AboutFragment : Fragment() {
+
+    private val sharedViewModel: ToolbarViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +34,7 @@ internal class AboutFragment : Fragment() {
 
         startDrawableAnimation()
         initComponents()
+        sharedViewModel.updateTitle(getString(R.string.preference_item_about))
     }
 
     private fun startDrawableAnimation() {

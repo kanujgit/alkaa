@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.escodro.core.extension.textChangedFlow
+import com.escodro.core.viewmodel.ToolbarViewModel
 import com.escodro.search.R
 import com.escodro.search.model.TaskSearch
 import com.xwray.groupie.GroupAdapter
@@ -17,6 +18,7 @@ import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -26,6 +28,8 @@ import timber.log.Timber
 internal class SearchFragment : Fragment() {
 
     private val viewModel: SearchViewModel by viewModel()
+
+    private val sharedViewModel: ToolbarViewModel by sharedViewModel()
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
@@ -45,6 +49,7 @@ internal class SearchFragment : Fragment() {
         recyclerview_search.adapter = adapter
         initListeners()
         viewModel.findTasksByName()
+        sharedViewModel.updateTitle(getString(R.string.search_title))
     }
 
     private fun initListeners() {

@@ -9,14 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.escodro.alkaa.R
 import com.escodro.alkaa.model.Category
-import com.escodro.core.extension.close
 import com.escodro.core.extension.hideKeyboard
-import com.escodro.core.extension.isOpen
 import com.escodro.core.extension.navigateSingleTop
 import com.escodro.core.viewmodel.ToolbarViewModel
 import com.escodro.splitinstall.SplitInstall
@@ -69,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout_main_parent)
 
-        navController.addOnDestinationChangedListener { _, dest, _ -> onNavigate(dest) }
+        navController.addOnDestinationChangedListener { _, _, _ -> onNavigate() }
         sharedViewModel.actionBarTitle.observe(this, Observer { updateToolbarTitle(it) })
     }
 
@@ -91,13 +88,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onNavigate(dest: NavDestination) {
-        val title = dest.label as? String?
-        Timber.d("onNavigate() - title  = $title")
+    private fun onNavigate() {
+        Timber.d("onNavigate()")
 
-        // If the destination label is null ignore it. All the destinations without label are being
-        // handled by the shared ViewModel.
-        title?.let { updateToolbarTitle(title) }
+        sharedViewModel.clearTitle()
         hideKeyboard()
     }
 

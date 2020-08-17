@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.escodro.category.presentation.list.CategoryListFragment"
-        android:label="@string/category_list_label"
         tools:layout="@layout/fragment_category_list">
 
         <action
@@ -32,13 +31,11 @@
     <fragment
         android:id="@+id/addCategoryFragment"
         android:name="com.escodro.category.presentation.add.CategoryAddFragment"
-        android:label=""
         tools:layout="@layout/fragment_category_detail" />
 
     <fragment
         android:id="@+id/editCategoryFragment"
         android:name="com.escodro.category.presentation.edit.CategoryEditFragment"
-        android:label=""
         tools:layout="@layout/fragment_category_detail">
 
         <argument

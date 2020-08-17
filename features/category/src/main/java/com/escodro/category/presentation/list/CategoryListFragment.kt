@@ -16,9 +16,11 @@ import com.escodro.category.model.Category
 import com.escodro.core.extension.dialog
 import com.escodro.core.extension.negativeButton
 import com.escodro.core.extension.positiveButton
+import com.escodro.core.viewmodel.ToolbarViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_category_list.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -30,6 +32,8 @@ internal class CategoryListFragment : Fragment() {
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private val viewModel: CategoryListViewModel by viewModel()
+
+    private val sharedViewModel: ToolbarViewModel by sharedViewModel()
 
     private var navigator: NavController? = null
 
@@ -53,6 +57,7 @@ internal class CategoryListFragment : Fragment() {
         updateRecyclerView()
         viewModel.loadCategories(onListLoaded = ::updateList)
         navigator = NavHostFragment.findNavController(this)
+        sharedViewModel.updateTitle(getString(R.string.category_list_title))
 
         button_categorylist_add?.setOnClickListener { addCategory() }
     }

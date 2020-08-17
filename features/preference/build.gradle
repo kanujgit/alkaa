@@ -8,4 +8,6 @@ dependencies {
     implementation Deps.android.constraintLayout
     implementation Deps.android.navigation.fragment
     implementation Deps.android.navigation.ui
+
+    implementation Deps.koin.viewModel
 }

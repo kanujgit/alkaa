@@ -16,7 +16,7 @@ class PreferenceFlowTest : AcceptanceTest<MainActivity>(MainActivity::class.java
     fun openAbout() {
         navigateToPreference()
         events.clickOnViewWithText(R.string.preference_item_about)
-        checkThat.viewHasText(R.id.toolbar_title, R.string.about_detail_title)
+        checkThat.viewHasText(R.id.toolbar_title, R.string.preference_item_about)
     }
 
     private fun navigateToPreference() {

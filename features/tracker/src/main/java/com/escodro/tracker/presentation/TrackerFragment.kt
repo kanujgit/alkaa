@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.escodro.core.viewmodel.ToolbarViewModel
 import com.escodro.tracker.R
 import com.escodro.tracker.di.injectDynamicFeature
 import com.escodro.tracker.model.Tracker
@@ -17,6 +18,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.google.android.play.core.splitcompat.SplitCompat
 import kotlinx.android.synthetic.main.fragment_tracker.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -26,6 +28,8 @@ import timber.log.Timber
 class TrackerFragment : Fragment() {
 
     private val trackerViewModel: TrackerViewModel by viewModel()
+
+    private val sharedViewModel: ToolbarViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +52,7 @@ class TrackerFragment : Fragment() {
 
         trackerViewModel.loadData()
         trackerViewModel.viewState.observe(this, Observer(::renderViewState))
+        sharedViewModel.updateTitle("Task Tracker")
     }
 
     private fun renderViewState(state: TrackerUIState) {
