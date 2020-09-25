@@ -44,7 +44,7 @@ object Versions {
 
     const val compose = "1.0.0-alpha02"
 
-    const val buildGradle = "4.2.0-alpha10"
+    const val buildGradle = "4.2.0-alpha12"
 
     const val detekt = "1.13.1"
     const val ktlint = "0.39.0"

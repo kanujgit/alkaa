@@ -22,7 +22,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import com.escodro.alkaa.model.HomeSection
+import com.escodro.task.model.Task
+import com.escodro.task.presentation.TaskSection
 import com.escodro.theme.AlkaaTheme
+import java.util.Calendar
 
 /**
  * Alkaa Home screen.
@@ -31,6 +34,13 @@ import com.escodro.theme.AlkaaTheme
 fun Home() {
     val (currentSection, setCurrentSection) = savedInstanceState { HomeSection.Tasks }
     val navItems = HomeSection.values().toList()
+
+    val taskList = listOf(
+        Task(title = "Buy milk", dueDate = null),
+        Task(title = "Call Mark", dueDate = Calendar.getInstance()),
+        Task(title = "Watch Moonlight", dueDate = Calendar.getInstance())
+    )
+
     Scaffold(
         topBar = {
             AlkaaTopBar(currentSection = currentSection)
@@ -41,8 +51,11 @@ fun Home() {
                 onSectionSelected = setCurrentSection,
                 items = navItems
             )
+        },
+        bodyContent = {
+            TaskSection(taskList = taskList, onItemClicked = {})
         }
-    ) {}
+    )
 }
 
 @Composable
